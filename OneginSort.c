@@ -1,4 +1,4 @@
-// Компилирую в Visual Studio
+// РљРѕРјРїРёР»РёСЂСѓСЋ РІ Visual Studio
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,15 +12,15 @@ typedef struct
     char* e;
 } String;
 
-// Проверка является ли символ буквой или цифрой
+// РџСЂРѕРІРµСЂРєР° СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЃРёРјРІРѕР» Р±СѓРєРІРѕР№ РёР»Рё С†РёС„СЂРѕР№
 char isNoun(char c) {
-    if (c >= 'А' && c <= 'Я' || c >= 'а' && c <= 'я' || c >= 'A' && c <= 'Z' ||
+    if (c >= 'Рђ' && c <= 'РЇ' || c >= 'Р°' && c <= 'СЏ' || c >= 'A' && c <= 'Z' ||
         c >= 'a' && c <= 'z' || c >= '0' && c <= '9') return 1;
     else return 0;
 }
 
-// Сравнение строк для сортировки, игнорируя знаки препинания
-// (слева на право)
+// РЎСЂР°РІРЅРµРЅРёРµ СЃС‚СЂРѕРє РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё, РёРіРЅРѕСЂРёСЂСѓСЏ Р·РЅР°РєРё РїСЂРµРїРёРЅР°РЅРёСЏ
+// (СЃР»РµРІР° РЅР° РїСЂР°РІРѕ)
 int StringComp(const String* ca, const String* cb) {
     int la = 0, lb = 0;
     char* a = ca->b, * b = cb->b;
@@ -38,8 +38,8 @@ int StringComp(const String* ca, const String* cb) {
     }
 } 
 
-// Сравнение строк для сортировки, игнорируя знаки препинания
-// (справа на лево)
+// РЎСЂР°РІРЅРµРЅРёРµ СЃС‚СЂРѕРє РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё, РёРіРЅРѕСЂРёСЂСѓСЏ Р·РЅР°РєРё РїСЂРµРїРёРЅР°РЅРёСЏ
+// (СЃРїСЂР°РІР° РЅР° Р»РµРІРѕ)
 int StringCompRev(const String* ca, const String* cb) {
     int la = 0, lb = 0;
     char* a = ca->e, * b = cb->e;
@@ -57,64 +57,64 @@ int StringCompRev(const String* ca, const String* cb) {
     }
 }
 
-// Печатает чекст из res в файл SortedText.txt
+// РџРµС‡Р°С‚Р°РµС‚ С‚РµРєСЃС‚ РёР· res РІ С„Р°Р№Р» SortedText.txt
 void PrintText(char *res, int type) {
 
     FILE* fOut;
     fOut = fopen("SortedText.txt", type == 0 ? "w" : "a");
 
     if (type == 0)
-        fputs("\n\nТекст отсортирован с лева на право\n_______________\n\n\n\n", fOut);
+        fputs("\n\nРўРµРєСЃС‚ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ СЃ Р»РµРІР° РЅР° РїСЂР°РІРѕ\n_______________\n\n\n\n", fOut);
 
     else if (type == 1)
-        fputs("\n\nТекст отсортирован с право на лево\n_______________\n\n\n\n", fOut);
+        fputs("\n\nРўРµРєСЃС‚ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ СЃ РїСЂР°РІРѕ РЅР° Р»РµРІРѕ\n_______________\n\n\n\n", fOut);
 
     else if (type == 2)
-        fputs("\n\nОригинальный текст\n_______________\n\n\n\n", fOut);
+        fputs("\n\nРћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ С‚РµРєСЃС‚\n_______________\n\n\n\n", fOut);
 
     fputs(res, fOut);
 
     fclose(fOut);
 }
 
-// Сортирует текст из файла FileName
-// type == 0 сортировка с слева на право
-// type == 1 сортировка с справа на лево
-// type >= 2 не сортирует текст
-// Возвращает указатель на отсортированный текст
-// !!! необходимо потом почистить память по возвращаемому указателю !!!
+// РЎРѕСЂС‚РёСЂСѓРµС‚ С‚РµРєСЃС‚ РёР· С„Р°Р№Р»Р° FileName
+// type == 0 СЃРѕСЂС‚РёСЂРѕРІРєР° СЃ СЃР»РµРІР° РЅР° РїСЂР°РІРѕ
+// type == 1 СЃРѕСЂС‚РёСЂРѕРІРєР° СЃ СЃРїСЂР°РІР° РЅР° Р»РµРІРѕ
+// type >= 2 РЅРµ СЃРѕСЂС‚РёСЂСѓРµС‚ С‚РµРєСЃС‚
+// Р’РѕР·РІСЂР°С‰Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ С‚РµРєСЃС‚
+// !!! РЅРµРѕР±С…РѕРґРёРјРѕ РїРѕС‚РѕРј РїРѕС‡РёСЃС‚РёС‚СЊ РїР°РјСЏС‚СЊ РїРѕ РІРѕР·РІСЂР°С‰Р°РµРјРѕРјСѓ СѓРєР°Р·Р°С‚РµР»СЋ !!!
 char* SortText(char* FileName, int type) {
     char* text;
     FILE* pFile;
     size_t lSize;
     size_t result;
 
-    // Бинарное считывание файла
+    // Р‘РёРЅР°СЂРЅРѕРµ СЃС‡РёС‚С‹РІР°РЅРёРµ С„Р°Р№Р»Р°
     pFile = fopen(FileName, "rb");
     if (pFile == null) { fprintf(stderr, "File error"); exit(1); }
 
-    // Узнаём размер файла
+    // РЈР·РЅР°С‘Рј СЂР°Р·РјРµСЂ С„Р°Р№Р»Р°
     fseek(pFile, 0, SEEK_END);
     lSize = ftell(pFile);
     rewind(pFile);
 
-    // Выделяем память для записи данных из файла
+    // Р’С‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РґР»СЏ Р·Р°РїРёСЃРё РґР°РЅРЅС‹С… РёР· С„Р°Р№Р»Р°
     text = (char*)malloc(sizeof(char) * (lSize + 1));
     if (text == null) { fprintf(stderr, "Memory error"); exit(2); }
 
-    // Записываем данные из файла
+    // Р—Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РёР· С„Р°Р№Р»Р°
     result = fread(text, sizeof(char), lSize, pFile);
     fclose(pFile);
     if (result != lSize) { fprintf(stderr, "Reading error"); exit(3); }
     if (result == 0) { fprintf(stderr, "Empty file");  exit(4); }
     *(text + result) = '\n';
 
-    // Узнаём максимальное колличество строк
+    // РЈР·РЅР°С‘Рј РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє
     int sCount = 0;
     for (size_t i = 0; i < result + 1; ++i)
         if (text[i] == '\n') ++sCount;
     
-    // Выделяем память для указателей на строки   
+    // Р’С‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РґР»СЏ СѓРєР°Р·Р°С‚РµР»РµР№ РЅР° СЃС‚СЂРѕРєРё   
     String *st = (String*)malloc(sizeof(String) * sCount);
     if (st == null) { fprintf(stderr, "Memory error"); exit(2); }
     size_t sn = 0;
@@ -126,13 +126,13 @@ char* SortText(char* FileName, int type) {
         else if (sn == 0 && text[i] != '\r') st[sn++].b = text;
     }
 
-    // Сортировка слева на право
+    // РЎРѕСЂС‚РёСЂРѕРІРєР° СЃР»РµРІР° РЅР° РїСЂР°РІРѕ
     if (type == 0) qsort((void*)st, sn, sizeof(String), StringComp);
     
-    // Сортировка справа на лево
+    // РЎРѕСЂС‚РёСЂРѕРІРєР° СЃРїСЂР°РІР° РЅР° Р»РµРІРѕ
     if (type == 1) qsort((void*)st, sn, sizeof(String), StringCompRev);
 
-    // Выделяем память для отсортированного текста
+    // Р’С‹РґРµР»СЏРµРј РїР°РјСЏС‚СЊ РґР»СЏ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ С‚РµРєСЃС‚Р°
     char* res = (char*)malloc(sizeof(char) * (lSize + 2)); 
     if (res == null) { fprintf(stderr, "Memory error"); exit(-2); }
     int k = 0;
@@ -145,7 +145,7 @@ char* SortText(char* FileName, int type) {
         if (f) res[k++] = '\n';
     } res[k++] = '\0';
 
-    // Освобождаем память
+    // РћСЃРІРѕР±РѕР¶РґР°РµРј РїР°РјСЏС‚СЊ
     free(text);
     free(st);
     return res;
@@ -201,17 +201,17 @@ int main() {
 
 #endif // UNIT_TESTS
 
-    // Сортировка слева на право
+    // РЎРѕСЂС‚РёСЂРѕРІРєР° СЃР»РµРІР° РЅР° РїСЂР°РІРѕ
     char* res = SortText("Onegin.txt", 0);
     PrintText(res, 0);
     free(res);
 
-    // Сортировка справа на лево
+    // РЎРѕСЂС‚РёСЂРѕРІРєР° СЃРїСЂР°РІР° РЅР° Р»РµРІРѕ
     res = SortText("Onegin.txt", 1);
     PrintText(res, 1);
     free(res);
 
-    // Оригинальный текст
+    // РћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ С‚РµРєСЃС‚
     res = SortText("Onegin.txt", 2);
     PrintText(res, 2);
     free(res);
