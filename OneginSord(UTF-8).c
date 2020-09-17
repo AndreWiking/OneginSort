@@ -57,7 +57,7 @@ int StringCompRev(const String* ca, const String* cb) {
     }
 }
 
-// Печатает чекст из res в файл SortedText.txt
+// Печатает текст из res в файл SortedText.txt
 void PrintText(char *res, int type) {
 
     FILE* fOut;
@@ -109,7 +109,7 @@ char* SortText(char* FileName, int type) {
     if (result == 0) { fprintf(stderr, "Empty file");  exit(4); }
     *(text + result) = '\n';
 
-    // Узнаём максимальное колличество строк
+    // Узнаём максимальное количество строк
     int sCount = 0;
     for (size_t i = 0; i < result + 1; ++i)
         if (text[i] == '\n') ++sCount;
