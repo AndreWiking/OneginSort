@@ -42,7 +42,7 @@ int StringComp(const String* ca, const String* cb) {
 // (справа на лево)
 int StringCompRev(const String* ca, const String* cb) {
     int la = 0, lb = 0;
-    char* a = ca->e, * b = cb->e;
+    const char* a = ca->e, * b = cb->e;
     while (1)
     {
         if (a < ca->b && b < cb->b) return la < lb ? -1 : la > lb ? 1 : 0;
@@ -58,7 +58,7 @@ int StringCompRev(const String* ca, const String* cb) {
 }
 
 // Печатает текст из res в файл SortedText.txt
-void PrintText(char *res, int type) {
+void PrintText(char const* res, int type) {
 
     FILE* fOut;
     fOut = fopen("SortedText.txt", type == 0 ? "w" : "a");
@@ -87,25 +87,25 @@ size_t GetFileSize(FILE* pFile) {
 
 // Возвращает указатель на считанный текст
 // !!! необходимо потом почистить память по возвращаемому указателю !!!
-char* ReadText(char* FileName, size_t *lSize, size_t *result) {
+char* ReadText(const char* FileName, size_t *lSize, size_t *result) {
     FILE* pFile;
     char* text;
 
     // Бинарное считывание файла
     pFile = fopen(FileName, "rb");
-    if (pFile == null) { fprintf(stderr, "File error"); exit(1); }
+    if (pFile == null) { fprintf(stderr, "File error"); exit(-1); }
 
     *lSize = GetFileSize(pFile);
 
     // Выделяем память для записи данных из файла
     text = (char*)calloc(*lSize + 1, sizeof(char));
-    if (text == null) { fprintf(stderr, "Memory error"); exit(2); }
+    if (text == null) { fprintf(stderr, "Memory error"); exit(-2); }
 
     // Записываем данные из файла
     *result = fread(text, sizeof(char), *lSize, pFile);
     fclose(pFile);
-    if (*result != *lSize) { fprintf(stderr, "Reading error"); exit(3); }
-    if (*result == 0) { fprintf(stderr, "Empty file");  exit(4); }
+    if (*result != *lSize) { fprintf(stderr, "Reading error"); exit(-3); }
+    if (*result == 0) { fprintf(stderr, "Empty file");  exit(-4); }
     *(text + *result) = '\n';
 
     return text;
@@ -114,18 +114,17 @@ char* ReadText(char* FileName, size_t *lSize, size_t *result) {
 // Быстрый подсчёт количества \n
 int LinesCount(const char* text) {
     int sCount = 0;
-    char* ctext = text;
     while(1)
     {
-        ctext = strchr(ctext, '\n');
-        if (ctext == null) break;
-        ++ctext;
+        text = strchr(text, '\n');
+        if (text == null) break;
+        ++text;
         ++sCount;
     }
     return sCount;
 }
 
-// Делим char* на String 
+// Делим char* на String и возвращаем их количество 
 size_t FillStrings(String* strings, char* text, size_t result) {
     size_t sn = 0; // номер текущей строки
     for (size_t i = 0; i < result + 1; ++i) {
@@ -139,7 +138,7 @@ size_t FillStrings(String* strings, char* text, size_t result) {
 }
 
 // Преобразовываем массив String в char*
-void StringsToChars(char* resText, String *strings, size_t sn) {
+void StringsToChars(char* resText, const String *strings, size_t sn) {
     int k = 0;
     for (size_t i = 0; i < sn; ++i) {
         char f = 0;
@@ -157,7 +156,7 @@ void StringsToChars(char* resText, String *strings, size_t sn) {
 // type >= 2 не сортирует текст
 // Возвращает указатель на отсортированный текст
 // !!! необходимо потом почистить память по возвращаемому указателю !!!
-char* SortText(char* FileName, int type) {
+char* SortText(const char* FileName, int type) {
     char* text;
     size_t lSize;
     size_t result;
@@ -169,7 +168,7 @@ char* SortText(char* FileName, int type) {
     
     // Выделяем память для указателей на строки   
     String *strings = (String*)calloc(sCount, sizeof(String));
-    if (strings == null) { fprintf(stderr, "Memory error"); exit(2); }
+    if (strings == null) { fprintf(stderr, "Memory error"); exit(-2); }
 
     // Заполняем массив строк и узнаём их итоговое количество
     size_t sn = FillStrings(strings, text, result);
